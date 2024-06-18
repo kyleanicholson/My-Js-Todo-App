@@ -1,0 +1,14 @@
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height:1.25;
+}
+
+body{
+    padding:1rem;
+    background: url(images/background.svg);
+    color: white;
+}
+
+button{
+    
+}
