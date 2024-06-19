@@ -1,21 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Electrolize&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
 html {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Electrolize", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   line-height: 1.25;
 }
 
 body {
   padding: 1rem;
   color: white;
+  background: #334155;
   font-size: 1.25rem;
 }
 
 h1 {
   -webkit-text-stroke-width: 1.5px;
-  -webkit-text-stroke-color: black;
+  -webkit-text-stroke-color: #020617;
+  font-family: "Jura", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 3.25rem;
 }
 
 ul {
   list-style: none;
+  display: flex;
+  flex-direction: column;
   padding: 0;
 }
 
@@ -23,57 +35,74 @@ button {
   color: black;
   padding: 0.5rem 2.5rem;
   border-radius: 2%;
-  border: 1px solid black;
+  border: 1px solid #020617;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 button:hover {
-   /* change to your desired color */
+  /* change to your desired color */
   color: white; /* change to your desired color */
+}
+
+button:active {
+  box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+    inset 2px 2px 3px rgba(0, 0, 0, 0.6);
 }
 
 #add-todo {
   background-color: green;
 }
-#edit-todo{
-  background-color: #008CBA;
+#complete-todo {
+  background-color: #008cba;
 }
+#edit-todo {
+  background-color: darkorange;
+}
+
 #delete-todo {
   background: red;
 }
 
 input {
   padding: 0.5rem;
-  border: 0.5px solid black;
+  border: 0.5px solid #020617;
 }
 
 .app-container {
-  background: white;
-  border: 1px solid black;
+  background: #64748b;
+  border: 1px solid #020617;
   padding: 1.5rem;
+  border-radius:4px;
 }
 #todo-list {
-  max-height: 300px;
-  border-radius: 1%;
-  border: 0.25px solid black;
+  max-height: 350px;
+  border: 0.25px ridge #020617;
   overflow-y: scroll;
-  padding-top:0.25rem;
+  padding-top: 0.25rem;
+  background: #f8fafc;
+  border-radius:4px;
 }
 
 #todo-list li {
-  color: black;
+  color: #1e293b;
+  background-color: #e2e8f0;
   padding: 0.5rem;
   margin: 0.1rem 0.2rem;
-  border-top: 0.25px solid black;
+  border-top: 0.25px solid #020617;
   border-style: groove;
+  
 }
-#todo-input{
-  flex:1;
+#todo-input {
+  flex: 1;
 }
 .flex-row-container {
   display: flex;
   gap: 0.5rem;
+  padding: 0.5rem;
 }
 
- #todo-list .selected {
-  color:white;
-  background-color:blue;
+#todo-list .selected {
+  color: white;
+  background-color: #94a3b8;
 }
