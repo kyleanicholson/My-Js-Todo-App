@@ -1,39 +1,32 @@
 
-// Query selectors
-
 const storedTodos = localStorage.getItem("todos");
 const todoContainer = document.querySelector("#todo-list");
 const addTodoButton = document.querySelector("#add-todo");
 const todoInput = document.querySelector("#todo-input");
 
-
-
-
-// Todo Data
-let todos = []
+// Load Data (if it exists)
+let TODOS = []; // init global state 
 if (storedTodos) {
-  todos = JSON.parse(storedTodos);
-} else {
-  todos = [
-    // Example data
-    { text: "Eat breakfast" },
-    { text: "Drink coffee" },
-    { text: "Contemplate life decisions" },
-  ];
+  TODOS = JSON.parse(storedTodos);
 }
 
 // Functions
+
+const createTodoElement = (todo) => {
+  let li = document.createElement("li");
+  li.appendChild(document.createTextNode(todo.text));
+  return li;
+};
+
 const buildTodoList = (todoList) => {
   todoContainer.innerHTML = "";
   for (let todo of todoList) {
     let li = createTodoElement(todo);
-    li.classList.add("todo-item")
+    li.classList.add("todo-item");
     todoContainer.appendChild(li);
   }
-  localStorage.setItem("todos",JSON.stringify(todoList));
-  
-
 };
+
 
 const getTodoFromInput = () => {
   let inputVal = todoInput.value;
@@ -47,48 +40,38 @@ const getTodoFromInput = () => {
   }
 };
 
-const createTodoElement = (todo) => {
-  let li = document.createElement("li");
-  li.appendChild(document.createTextNode(todo.text));
-  return li;
-};
-
-buildTodoList(todos);
-
 // Event Listeners
+
+document.addEventListener("DOMContentLoaded", buildTodoList(TODOS));
 
 todoInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
     let todo = getTodoFromInput();
     if (todo) {
-      todos.push(todo);
-      buildTodoList(todos);
+      TODOS.push(todo); // Update the global state
+      localStorage.setItem("todos", JSON.stringify(TODOS));
+      
     }
   }
 });
 
 addTodoButton.addEventListener("click", () => {
-  let todo = getTodoFromInput();
+  let todo = getTodoFromInput(); // get the new data
   if (todo) {
-    todos.push(todo);
-    buildTodoList(todos);
+    TODOS.push(todo); // Update the global state
+    localStorage.setItem("todos", JSON.stringify(TODOS)) 
+    
   }
 });
-  
 
-
-
-todoItems = document.querySelectorAll(".todo-item")
-todoItems.forEach(todoItem => {
-  todoItem.addEventListener("click", (e) => {
-   
+todoElements = document.querySelectorAll(".todo-item");
+todoElements.forEach((todoElement) => {
+  todoElement.addEventListener("click", (e) => {
     let clickedTodo = e.target;
-    if (clickedTodo.classList.contains('selected')){
-      clickedTodo.classList.remove("selected")
-    }
-    else{
+    if (clickedTodo.classList.contains("selected")) {
+      clickedTodo.classList.remove("selected");
+    } else {
       clickedTodo.classList.add("selected");
     }
-    
   });
 });
