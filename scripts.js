@@ -9,6 +9,13 @@ let TODOS = []; // init global state
 if (storedTodos) {
   TODOS = JSON.parse(storedTodos);
 }
+else {
+  TODOS = [
+    { text: "Buy milk" },
+    { text: "Do laundry" },
+    { text: "Clean the house" },
+  ];
+}
 
 // Functions
 
@@ -27,6 +34,11 @@ const buildTodoList = (todoList) => {
   }
 };
 
+const updateDOM = () => {
+  todoContainer.innerHTML = "";
+  buildTodoList(TODOS);
+};
+
 
 const getTodoFromInput = () => {
   let inputVal = todoInput.value;
@@ -41,8 +53,10 @@ const getTodoFromInput = () => {
 };
 
 // Event Listeners
-
-document.addEventListener("DOMContentLoaded", buildTodoList(TODOS));
+document.addEventListener("DOMContentLoaded", () => {
+  buildTodoList(TODOS);
+  updateDOM();
+});
 
 todoInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
@@ -50,7 +64,7 @@ todoInput.addEventListener("keypress", (e) => {
     if (todo) {
       TODOS.push(todo); // Update the global state
       localStorage.setItem("todos", JSON.stringify(TODOS));
-      
+      updateDOM();
     }
   }
 });
@@ -59,8 +73,8 @@ addTodoButton.addEventListener("click", () => {
   let todo = getTodoFromInput(); // get the new data
   if (todo) {
     TODOS.push(todo); // Update the global state
-    localStorage.setItem("todos", JSON.stringify(TODOS)) 
-    
+    localStorage.setItem("todos", JSON.stringify(TODOS))
+    updateDOM();
   }
 });
 
