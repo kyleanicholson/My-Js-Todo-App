@@ -121,8 +121,6 @@ label{
     padding: 0.25rem;
     background: #2d3748;
     margin: 0.1rem 0.2rem;
-    border-top: 0.25px solid #020617;
-    border-style: groove;
     border-radius: 4px;
     overflow-wrap: break-word;
     cursor: pointer;
