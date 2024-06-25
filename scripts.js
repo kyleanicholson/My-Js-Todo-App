@@ -3,19 +3,21 @@ const todoContainer = document.querySelector("#todo-list");
 const addTodoButton = document.querySelector("#add-todo");
 const todoInput = document.querySelector("#todo-input");
 const completeTodoButton = document.querySelector("#complete-todo");
+const activeTab = document.querySelector("#active-tab");
+const completedTab = document.querySelector("#complete-tab");
 
 // Load Data (if it exists)
 let TODOS = []; // init global state's todos
 let todoID = 0; // init global state's todoID
+let exampleTodos = [
+  { id: todoID++, text: "Learn HTML", completed: false },
+  { id: todoID++, text: "Learn CSS", completed: false },
+  { id: todoID++, text: "Learn JavaScript", completed: false },
+];
+// Load Data
 if (storedTodos) {
   TODOS = JSON.parse(storedTodos);
-} else {
-  TODOS = [
-    { id: -1, text: "Buy milk" },
-    { id: -2, text: "Do laundry" },
-    { id: -3, text: "Clean the house" },
-  ];
-}
+} else TODOS = exampleTodos;
 
 // Save Data
 const saveData = () => {
@@ -56,10 +58,7 @@ const buildTodoList = (todoList) => {
 
 const updateDOM = () => {
   buildTodoList(TODOS);
-  let todoElements = document.querySelectorAll(".todo-item");
-  todoElements.forEach((todoElement) => {
-    todoElement.addEventListener("click", handleTodoClick);
-  });
+
   saveData();
 };
 
@@ -71,32 +70,30 @@ const completeTodo = (id) => {
   }
   updateDOM();
 };
-// Event Handler Functions
-const handleTodoClick = (e) => {
-  let clickedTodo = e.target;
-  if (clickedTodo.classList.contains("selected")) {
-    clickedTodo.classList.remove("selected");
-  } else {
-    clickedTodo.classList.add("selected");
-  }
+
+const filterTodos = (completed) => {
+  return TODOS.filter((todo) => todo.completed === completed);
 };
+
+// Event Handler Functions
 
 const handleAddTodoClick = () => {
   let todo = getTodoFromInput();
   if (todo) {
+    todo.id = todoID++;
     TODOS.push(todo);
     updateDOM();
   }
 };
 
 // Utility Functions
+
 const getTodoFromInput = () => {
   let inputVal = todoInput.value;
   if (inputVal) {
-    let newTodoID = todoID++;
     todoInput.value = "";
     console.log(`New todo added successfully!\n ${inputVal}`);
-    return { id: newTodoID, text: `${inputVal}` };
+    return { text: `${inputVal}` }; // Don't increment todoID here
   } else {
     console.log("Input not found or invalid");
     return null;
@@ -116,12 +113,26 @@ todoInput.addEventListener("keypress", (e) => {
 });
 
 addTodoButton.addEventListener("click", handleAddTodoClick);
-completeTodoButton.addEventListener("click", () => {});
 // Check which todos are checked and complete them when the button is clicked
 completeTodoButton.addEventListener("click", () => {
-  let selectedTodos = document.querySelectorAll(".selected");
-  selectedTodos.forEach((todo) => {
-    let todoID = todo.id;
-    completeTodo(todoID);
-  });
+  let checkboxes = document.querySelectorAll("input[type='checkbox']");
+  for (let checkbox of checkboxes) {
+    if (checkbox.checked) {
+      completeTodo(parseInt(checkbox.id));
+    }
+  }
 });
+
+activeTab.addEventListener("click", handleActiveTabClick);
+completedTab.addEventListener("click", handleCompletedTabClick);
+
+// Toast Message Function
+const toast = (message) => {
+  let toast = document.createElement("div");
+  toast.classList.add("toast");
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+  }, 2000);
+};
